@@ -1,20 +1,25 @@
 "use strict"
 
-const modalAdd = document.getElementById("modal_main");
-const closeModal = document.getElementsByClassName("modal__close");
-const successShow = document.querySelectorAll(".show-success");
-const modalSucces = document.getElementById("modal_success");
+const closesModal = Array.from(document.querySelectorAll(".modal__close_times"));
+const successShow = document.querySelector(".show-success");
+const modal = Array.from(document.querySelectorAll(".modal"));
+const activeClassName = "modal_active";
 
-function showPopup() {
-    modalAdd.style.display = 'flex';
-  }
-  
-  window.onload = showPopup();
+modal[0].classList.add(activeClassName); //вызываем первое модальное окно
 
-closeModal.item(0).addEventListener('click', function (){
-  modalAdd.style.display = 'none';
+successShow.addEventListener("click", function () {    //при клике на кнопку
+  modal[0].classList.remove(activeClassName);         //первое модельное окно становится неактивно
+  modal[1].classList.add(activeClassName);           //активируется второе модальное окно
 })
 
-successShow.item(0).addEventListener('click', function (){
-  modalSucces.style.display = 'flex';
-})
+for (let index = 0; index < closesModal.length; index++) {     //перебираем циклом массив из крестиков для закрытие окна 
+  const closeModal = closesModal[index];
+  closeModal.addEventListener("click", function () {         //устанавливаем на крестики событие клик 
+    if (closeModal.closest("#modal_main") !== null) {        //определяем принадлежность крестика к модальному окну по индексу 
+      modal[0].classList.remove(activeClassName);
+    }
+    else if (closeModal.closest("#modal_success") !== null) {
+      modal[1].classList.remove(activeClassName);
+    }
+  })
+}
