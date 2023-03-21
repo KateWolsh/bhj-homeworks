@@ -1,22 +1,31 @@
 const alltooltips = Array.from(document.querySelectorAll(".has-tooltip"));
+let activeTooltip = null;
 
 function toolTipsActive(e) {
   e.preventDefault();
 
-  const deletableElement = document.querySelector(".tooltip_active");
-  if (deletableElement) {
-    deletableElement.remove();
+  const tooltip = this.nextElementSibling;
+  if (tooltip && tooltip.classList.contains('tooltip_active')) {
+    tooltip.remove();
+    activeTooltip = null;
+    return;
+  }
+
+  if (activeTooltip) {
+    activeTooltip.remove();
   }
 
   const tipText = this.title;
-  const tooltip = document.createElement('div');
-  tooltip.className = 'tooltip tooltip_active';
-  tooltip.textContent = tipText;
-  this.insertAdjacentElement('beforeend', tooltip);
+  const newTooltip = document.createElement('div');
+  newTooltip.className = 'tooltip tooltip_active';
+  newTooltip.textContent = tipText;
+  this.insertAdjacentElement('afterend', newTooltip);
 
   const coords = this.getBoundingClientRect();
-  tooltip.style.left = coords.left + "px";
-  tooltip.style.top = coords.bottom + "px";
+  newTooltip.style.left = coords.left + "px";
+  newTooltip.style.top = coords.bottom + "px";
+
+  activeTooltip = newTooltip;
 }
 
 alltooltips.forEach((element) => {
