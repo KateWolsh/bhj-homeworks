@@ -1,17 +1,18 @@
 const input = document.getElementById("task__input");
 const tasks = document.querySelector(".tasks__list");
+const taskAdd = document.getElementById("tasks__add");
 
-input.addEventListener("keypress", function (event) {
-    if (event.key === "Enter" && input.value.trim() !== "") {
+taskAdd.addEventListener("click", function (event) {
+    if (event.target && input.value.trim() !== "") {
         const valueTask = input.value;
         tasks.innerHTML += `
         <div class="task">
             <div class="task__title">${valueTask}</div>
             <a href="#" class="task__remove">&times;</a>
         </div>`;
-        event.preventDefault();
         input.value = "";
     }
+    event.preventDefault();
 });
 
 tasks.addEventListener("click", function (event) {
