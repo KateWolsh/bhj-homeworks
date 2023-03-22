@@ -1,7 +1,7 @@
 const addToCartButtons = Array.from(document.querySelectorAll('.product__add'));
 const allProducts = document.querySelector('.cart__products');
 const products = Array.from(document.querySelectorAll('.product'));
-const cards = Array.from(document.querySelectorAll('.cart__product'));
+const cards = document.getElementsByClassName('cart__product');
 
 products.forEach(product => {
     let productQuantity = product.querySelector('.product__quantity-value');
@@ -32,7 +32,8 @@ addToCartButtons.forEach(button => {
         const productQuantityValue = Number(productCard.dataset.quantity);
         const productImage = productCard.querySelector('.product__image');
         
-        const productInCart = cards.find(card => card.dataset.id === productId);
+        const cardsArray = Array.from(cards);
+        const productInCart = cardsArray.find(card => card.dataset.id === productId);
         if (productInCart) {
             const existingQuantity = productInCart.querySelector('.cart__product-count');
             const newQuantity = Number(existingQuantity.textContent) + productQuantityValue;
